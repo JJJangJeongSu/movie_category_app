@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:movie_category_app/models/movie.dart';
 import 'package:movie_category_app/provider/movie_data_provider.dart';
 import 'package:movie_category_app/widgets/movie_tile.dart';
+import 'package:movie_category_app/widgets/movie_tiles.dart';
 
 class CategoryScreen extends ConsumerWidget {
   const CategoryScreen({super.key, required this.currentCategory});
@@ -10,7 +12,7 @@ class CategoryScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final movieData = ref.watch(movieDataProvider);
+    final movieData = ref.watch(availableMovieProvider);
     final currentMovieData = movieData
         .where((element) => element.genre.contains(currentCategory))
         .toList();
@@ -19,16 +21,7 @@ class CategoryScreen extends ConsumerWidget {
       appBar: AppBar(
         title: Text(currentCategory),
       ),
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 0.675,
-            crossAxisSpacing: 15,
-            mainAxisSpacing: 10),
-        itemBuilder: (context, index) => MovieTile(currentMovieData[index]),
-        itemCount: currentMovieData.length,
-      ),
+      body: MovieTiles(currentMovieData: currentMovieData),
     );
   }
 }

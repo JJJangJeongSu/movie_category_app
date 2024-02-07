@@ -4,7 +4,7 @@ import 'package:movie_category_app/screens/movie_detail_screen.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 class MovieTile extends StatelessWidget {
-  const MovieTile(this.movie);
+  const MovieTile(this.movie, {super.key});
 
   final Movie movie;
 
